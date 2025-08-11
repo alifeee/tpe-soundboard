@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
     <style>
       body {
-        position: fixed;
         color: white;
       }
       #background {
@@ -221,118 +220,6 @@
       <section class="board" id="favourites"></section>
       <!-- !!start templating!! -->
       <h2>
-        Coach
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Coach}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Coach}}
-      </section>
-      <h2>
-        Doors
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Doors}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Doors}}
-      </section>
-      <h2>
-        General
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#General}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/General}}
-      </section>
-      <h2>
-        Misc
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Misc}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Misc}}
-      </section>
-      <h2>
-        Reasons
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Reasons}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Reasons}}
-      </section>
-      <h2>
-        Safety
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Safety}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Safety}}
-      </section>
-      <h2>
-        Stations
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Stations}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Stations}}
-      </section>
-      <h2>
         Times
         <a class="toplink" href="#top">top</a>
       </h2>
@@ -347,22 +234,6 @@
           </button>
         </div>
         {{/Times}}
-      </section>
-      <h2>
-        Toilet
-        <a class="toplink" href="#top">top</a>
-      </h2>
-      <section class="board">
-        {{#Toilet}}
-        <div class="sound" id="{{ . }}">
-          <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
-          </button>
-          <button class="favourite" onclick='favourite("{{ . }}")'>
-            &hearts;
-          </button>
-        </div>
-        {{/Toilet}}
       </section>
       <!-- !!end templating!! -->
     </main>
