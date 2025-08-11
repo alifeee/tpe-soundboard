@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TransPennine Express soundboard</title>
+    <title>Soundboard | TransPennine Express</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
     <style>
       body {
-        position: relative;
         color: white;
       }
       #background {
@@ -35,6 +35,28 @@
         height: 4rem;
       }
 
+      main {
+        position: relative;
+      }
+      main > * {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      }
+      main h2 {
+        position: sticky;
+        top: 0;
+        background-color: #1e234f;
+        color: white;
+        margin: 1rem 0;
+        padding: 1rem;
+        display: flex;
+      }
+      main h2 a {
+        color: #82d0f588;
+        text-decoration: underline;
+        margin-left: auto;
+      }
+
       button {
         background: #00a6e6;
       }
@@ -48,18 +70,14 @@
         gap: 1rem;
       }
       .sound {
-        position: relative;
+        display: flex;
       }
       .sound button.play {
-        width: 100%;
-        padding-right: 3.5rem;
-        padding-left: 0.5rem;
+        width: 12.5rem;
+        overflow-wrap: anywhere;
         word-break: break-all;
       }
       .sound button.favourite {
-        position: absolute;
-        right: 0;
-        top: 0;
         background-color: grey;
         width: 3rem;
         max-width: 3rem;
@@ -74,6 +92,7 @@
 
       footer {
         text-align: center;
+        padding-bottom: 4rem;
       }
     </style>
 
@@ -122,9 +141,13 @@
         while (favourites_el.firstChild) {
           favourites_el.removeChild(favourites_el.lastChild);
         }
+        if (favourites.length == 0) {
+          favourites_el.innerText = "no favourites!";
+        }
         favourites.forEach((favourite_str) => {
           // original sound
           let sound_el = document.getElementById(favourite_str);
+          if (!sound_el) return;
           // set favourite button to red
           sound_el.querySelector(".favourite").classList.add("favourited");
 
@@ -155,6 +178,7 @@
         } else {
           // add sound to favourites array!
           favourites.push(sound);
+          favourites = favourites.toSorted();
         }
         load_favourites();
         // save to browser storage
@@ -172,12 +196,13 @@
           console.groupEnd();
         });
         favourites = JSON.parse(localStorage.getItem("favourites"));
+        if (!favourites) favourites = [];
         load_favourites();
       });
     </script>
   </head>
 
-  <body>
+  <body id="top">
     <img id="background" src="./tpe-train.jpg" />
     <header>
       <h1>
@@ -194,7 +219,10 @@
       </p>
       <section class="board" id="favourites"></section>
       <!-- !!start templating!! -->
-      <h2>Coach</h2>
+      <h2>
+        Coach
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Coach/1071.wav">
           <button class="play" onclick='play("audio/Coach/1071.wav")'>
@@ -413,7 +441,10 @@
           </button>
         </div>
       </section>
-      <h2>Doors</h2>
+      <h2>
+        Doors
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Doors/1091.wav">
           <button class="play" onclick='play("audio/Doors/1091.wav")'>
@@ -551,7 +582,10 @@
           </button>
         </div>
       </section>
-      <h2>General</h2>
+      <h2>
+        General
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/General/3001.wav">
           <button class="play" onclick='play("audio/General/3001.wav")'>
@@ -1985,7 +2019,10 @@
           </button>
         </div>
       </section>
-      <h2>Misc</h2>
+      <h2>
+        Misc
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Misc/1083.wav">
           <button class="play" onclick='play("audio/Misc/1083.wav")'>
@@ -2267,7 +2304,10 @@
           </button>
         </div>
       </section>
-      <h2>Reasons</h2>
+      <h2>
+        Reasons
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Reasons/4001.wav">
           <button class="play" onclick='play("audio/Reasons/4001.wav")'>
@@ -3782,7 +3822,10 @@
           </button>
         </div>
       </section>
-      <h2>Safety</h2>
+      <h2>
+        Safety
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Safety/1089.wav">
           <button class="play" onclick='play("audio/Safety/1089.wav")'>
@@ -3839,7 +3882,10 @@
           </button>
         </div>
       </section>
-      <h2>Stations</h2>
+      <h2>
+        Stations
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Stations/2001.wav">
           <button class="play" onclick='play("audio/Stations/2001.wav")'>
@@ -8873,7 +8919,10 @@
           </button>
         </div>
       </section>
-      <h2>Times</h2>
+      <h2>
+        Times
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Times/1001.wav">
           <button class="play" onclick='play("audio/Times/1001.wav")'>
@@ -9839,7 +9888,10 @@
           </button>
         </div>
       </section>
-      <h2>Toilet</h2>
+      <h2>
+        Toilet
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         <div class="sound" id="audio/Toilet/1084.wav">
           <button class="play" onclick='play("audio/Toilet/1084.wav")'>
