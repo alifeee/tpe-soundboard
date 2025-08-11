@@ -14,6 +14,9 @@ else
     TITLES=( Coach Doors General Misc Reasons Safety Stations Times Toilet )
 fi
 
+# for testing
+# TITLES=( Coach Doors Toilet )
+
 # mustache template parser
 source ./mo
 
@@ -63,11 +66,21 @@ fi
 
 rm -f $TEMP_FILE
 echo "${original_html}" | awk 'NR <= '"${start}"'' >> $TEMP_FILE
+i=0
 for title in "${TITLES[@]}"; do
+    prev=$(( $i - 1 ))
+    next=$(( $i + 1 ))
     cat << EOHTML >> $TEMP_FILE
+      <div class="hashlink"><div class="link" id="cat-$i"></div></div>
       <h2>
         $title
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-$prev">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-$next">next</a>
+        </div>
       </h2>
       <section class="board">
         {{#$title}}
@@ -82,6 +95,7 @@ for title in "${TITLES[@]}"; do
         {{/$title}}
       </section>
 EOHTML
+    i=$(( $i + 1 ))
 done
 echo "${original_html}" | awk 'NR >= '"${end}"'' >> $TEMP_FILE
 
