@@ -22,22 +22,7 @@
       }
 
       #burger-holder {
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        background-color: white;
-        color: #00a6e6;
-        font-size: 2rem;
-        border-radius: 50%;
-        height: 5rem;
-        width: 5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 50;
-      }
-      #burger-holder * {
-        transition: none !important;
+        display: none;
       }
 
       header {
@@ -51,22 +36,44 @@
       header .brand img {
         height: 4rem;
       }
-      header .burger.button {
-        font-size: 3rem;
-      }
-      header .menu {
-        display: flex;
-        flex-direction: column;
-        max-height: 100vh;
-      }
-      header .menu a:first-child {
-        margin-top: auto;
-      }
-      header .menu a:last-child {
-        margin-bottom: 6rem;
-      }
-      header .menu a {
-        transition: none !important;
+      /* mobile menu */
+      @media (max-width: 60em) {
+        #burger-holder {
+          display: block;
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          background-color: white;
+          color: #00a6e6;
+          font-size: 2rem;
+          border-radius: 50%;
+          height: 5rem;
+          width: 5rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 50;
+        }
+        #burger-holder * {
+          transition: none !important;
+        }
+        header .burger.button {
+          font-size: 3rem;
+        }
+        header .menu {
+          display: flex;
+          flex-direction: column;
+          max-height: 100vh;
+        }
+        header .menu a:first-child {
+          margin-top: auto;
+        }
+        header .menu a:last-child {
+          margin-bottom: 6rem;
+        }
+        header .menu a {
+          transition: none !important;
+        }
       }
 
       main {
