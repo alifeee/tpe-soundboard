@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ TITLE }}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
+    <style>
+      body {
+        position: relative;
+        color: white;
+      }
+      #background {
+        position: fixed;
+        --inset: 10px;
+        inset: calc(-1 * var(--inset));
+        width: calc(100vw + 2 * var(--inset));
+        height: calc(100vh + 2 * var(--inset));
+        z-index: -1;
+        filter: blur(5px) brightness(25%);
+      }
+
+      header {
+        text-align: center;
+        background-color: white;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+      }
+      h1 {
+        color: #240850;
+        margin: 0 1rem;
+        padding: 0;
+      }
+      h1 img {
+        height: 4rem;
+      }
+
+      button {
+        background: #00a6e6;
+      }
+      button.active {
+        background-color: #9873bd;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+        gap: 1rem;
+      }
+      .sound {
+        position: relative;
+      }
+      .sound button.play {
+        width: 100%;
+        padding-right: 3.5rem;
+        padding-left: 0.5rem;
+      }
+      .sound button.favourite {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: grey;
+        width: 3rem;
+        max-width: 3rem;
+      }
+      .sound button.favourite.favourited {
+        background-color: #a6008e;
+      }
+
+      #favourites .sound button.favourite {
+        background-color: #a6008e;
+      }
+
+      footer {
+        text-align: center;
+      }
+    </style>
+
+    <audio id="audioplayer" src="./audio/Coach/1071.wav"></audio>
+    <script>
+      let audioplayer;
+      let active;
+      let activefave;
+      let favourites = [];
+
+      function activate(button) {
+        button.classList.add("active");
+      }
+      function deactivate(button) {
+        button.classList.remove("active");
+      }
+
+      function play(sound) {
+        if (!audioplayer) return;
+
+        // play audio
+        audioplayer.load();
+        audioplayer.setAttribute("src", sound);
+        audioplayer.play();
+
+        // reset old button style
+        if (active) deactivate(active);
+        if (activefave) deactivate(activefave);
+
+        // set new active
+        active = document.getElementById(sound).querySelector(".play");
+        console.log("active button:", active);
+        activefave = document
+          .getElementById(`fave_${sound}`)
+          ?.querySelector(".play");
+
+        // add button style
+        activate(active);
+        if (activefave) activate(activefave);
+      }
+
+      // FAVOURITES
+      function load_favourites() {
+        console.log("loading favourites: ", favourites);
+        let favourites_el = document.getElementById("favourites");
+        while (favourites_el.firstChild) {
+          favourites_el.removeChild(favourites_el.lastChild);
+        }
+        favourites.forEach((favourite_str) => {
+          // original sound
+          let sound_el = document.getElementById(favourite_str);
+          // set favourite button to red
+          sound_el.querySelector(".favourite").classList.add("favourited");
+
+          // clone for favourites section
+          let fave_el = sound_el.cloneNode(true);
+          // prefix ID with "fave_"
+          let id = fave_el.getAttribute("id");
+          fave_el.setAttribute("id", `fave_${id}`);
+          // if playing, keep track of it with activefave
+          let play_button = fave_el.querySelector(".play");
+          let is_playing = play_button.classList.contains("active");
+          if (is_playing) activefave = play_button;
+          // change name (for more context)
+          play_button.innerText = id.replace("audio/", "").replace(/.wav$/, "");
+
+          // add to favourites
+          favourites_el.appendChild(fave_el);
+        });
+      }
+      function favourite(sound) {
+        console.log(`got request to toggle favourite ${sound}`);
+        if (favourites.includes(sound)) {
+          // remove red favourite button
+          let sound_el = document.getElementById(sound);
+          sound_el.querySelector(".favourite").classList.remove("favourited");
+          // remove sound from favourites array
+          favourites = favourites.filter((f) => f != sound);
+        } else {
+          // add sound to favourites array!
+          favourites.push(sound);
+        }
+        load_favourites();
+        // save to browser storage
+        localStorage.setItem("favourites", JSON.stringify(favourites));
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        audioplayer = document.getElementById("audioplayer");
+        audioplayer.addEventListener("ended", () => {
+          console.group("audio player ended, deactivating:");
+          console.log(active);
+          console.log(activefave);
+          if (active) deactivate(active);
+          if (activefave) deactivate(activefave);
+          console.groupEnd();
+        });
+        favourites = JSON.parse(localStorage.getItem("favourites"));
+        load_favourites();
+      });
+    </script>
+  </head>
+
+  <body>
+    <img id="background" src="./tpe-train.jpg" />
+    <header>
+      <h1>
+        <img
+          src="tpe-logo_soundboard.svg"
+          alt="logo, text is: TransPennine Express Soundboard"
+        />
+      </h1>
+    </header>
+    <main>
+      <h2>Favourites</h2>
+      <p>
+        These will stay when you close and open the webpage on the same device.
+      </p>
+      <section class="board" id="favourites"></section>
+      <!-- !!start templating!! -->
+      <h2>Coach</h2>
+      <section class="board">
+        {{#Coach}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Coach}}
+      </section>
+      <h2>Doors</h2>
+      <section class="board">
+        {{#Doors}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Doors}}
+      </section>
+      <h2>General</h2>
+      <section class="board">
+        {{#General}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/General}}
+      </section>
+      <h2>Misc</h2>
+      <section class="board">
+        {{#Misc}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Misc}}
+      </section>
+      <h2>Reasons</h2>
+      <section class="board">
+        {{#Reasons}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Reasons}}
+      </section>
+      <h2>Safety</h2>
+      <section class="board">
+        {{#Safety}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Safety}}
+      </section>
+      <h2>Stations</h2>
+      <section class="board">
+        {{#Stations}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Stations}}
+      </section>
+      <h2>Times</h2>
+      <section class="board">
+        {{#Times}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Times}}
+      </section>
+      <h2>Toilet</h2>
+      <section class="board">
+        {{#Toilet}}
+        <div class="sound" id="{{ . }}">
+          <button class="play" onclick='play("{{ . }}")'>
+            {{ soundname . }}
+          </button>
+          <button class="favourite" onclick='favourite("{{ . }}")'>
+            &hearts;
+          </button>
+        </div>
+        {{/Toilet}}
+      </section>
+      <!-- !!end templating!! -->
+    </main>
+    <footer>
+      <p>
+        made by <a href="https://alifeee.net/">alifeee</a> ·
+        <a href="">source</a>
+      </p>
+    </footer>
+  </body>
+</html>
