@@ -21,22 +21,57 @@
         filter: blur(5px) brightness(25%);
       }
 
+      #burger-holder {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        background-color: white;
+        color: #00a6e6;
+        font-size: 2rem;
+        border-radius: 50%;
+        height: 5rem;
+        width: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 50;
+      }
+      #burger-holder * {
+        transition: none !important;
+      }
+
       header {
-        text-align: center;
         background-color: white;
         box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+        color: #00a6e6;
       }
-      h1 {
-        color: #240850;
-        margin: 0 1rem;
-        padding: 0;
+      header nav {
+        padding: 4rem 0;
       }
-      h1 img {
+      header .brand img {
         height: 4rem;
+      }
+      header .burger.button {
+        font-size: 3rem;
+      }
+      header .menu {
+        display: flex;
+        flex-direction: column;
+        max-height: 100vh;
+      }
+      header .menu a:first-child {
+        margin-top: auto;
+      }
+      header .menu a:last-child {
+        margin-bottom: 6rem;
+      }
+      header .menu a {
+        transition: none !important;
       }
 
       main {
         position: relative;
+        margin-top: 8rem;
       }
       main > * {
         margin-left: 0.5rem;
@@ -44,17 +79,26 @@
       }
       main h2 {
         position: sticky;
-        top: 0;
+        top: 8rem;
         background-color: #1e234f;
         color: white;
         margin: 1rem 0;
         padding: 1rem;
         display: flex;
       }
-      main h2 a {
+      main h2 .links {
+        margin-left: auto;
+      }
+      main h2 .links a {
         color: #82d0f588;
         text-decoration: underline;
-        margin-left: auto;
+      }
+      main .hashlink {
+        position: relative;
+      }
+      main .hashlink .link {
+        position: absolute;
+        top: -8rem;
       }
 
       button {
@@ -202,26 +246,60 @@
     </script>
   </head>
 
-  <body id="top">
+  <body>
     <img id="background" src="./tpe-train.jpg" />
+    <!-- responsive-->
+    <div id="burger-holder">
+      <label for="bmenub" class="burger pseudo button">&#8801;</label>
+    </div>
     <header>
-      <h1>
-        <img
-          src="tpe-logo_soundboard.svg"
-          alt="logo, text is: TransPennine Express Soundboard"
-        />
-      </h1>
+      <nav>
+        <a href="#top" class="brand">
+          <img
+            src="tpe-logo_soundboard.svg"
+            alt="logo, text is: TransPennine Express Soundboard"
+          />
+        </a>
+
+        <!-- responsive-->
+        <input id="bmenub" type="checkbox" class="show" />
+        <label for="bmenub" class="burger pseudo button">&#8801;</label>
+
+        <div class="menu">
+          <a href="#favourites-header">Favourites</a>
+          <a href="#cat-0">Coach</a>
+          <a href="#cat-1">Doors</a>
+          <a href="#cat-2">General</a>
+          <a href="#cat-3">Misc</a>
+          <a href="#cat-4">Reasons</a>
+          <a href="#cat-5">Safety</a>
+          <a href="#cat-6">Stations</a>
+          <a href="#cat-7">Times</a>
+          <a href="#cat-8">Toilet</a>
+        </div>
+      </nav>
     </header>
     <main>
+      <div class="hashlink"><div class="link" id="top"></div></div>
+      <div class="hashlink">
+        <div class="link" id="favourites-header"></div>
+      </div>
       <h2>Favourites</h2>
       <p>
         These will stay when you close and open the webpage on the same device.
       </p>
       <section class="board" id="favourites"></section>
       <!-- !!start templating!! -->
+      <div class="hashlink"><div class="link" id="cat-0"></div></div>
       <h2>
         Coach
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat--1">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-1">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Coach/1071.wav">
@@ -441,9 +519,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-1"></div></div>
       <h2>
         Doors
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-0">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-2">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Doors/1091.wav">
@@ -582,9 +667,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-2"></div></div>
       <h2>
         General
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-1">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-3">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/General/3001.wav">
@@ -2019,9 +2111,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-3"></div></div>
       <h2>
         Misc
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-2">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-4">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Misc/1083.wav">
@@ -2304,9 +2403,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-4"></div></div>
       <h2>
         Reasons
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-3">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-5">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Reasons/4001.wav">
@@ -3822,9 +3928,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-5"></div></div>
       <h2>
         Safety
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-4">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-6">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Safety/1089.wav">
@@ -3882,9 +3995,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-6"></div></div>
       <h2>
         Stations
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-5">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-7">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Stations/2001.wav">
@@ -8919,9 +9039,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-7"></div></div>
       <h2>
         Times
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-6">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-8">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Times/1001.wav">
@@ -9888,9 +10015,16 @@
           </button>
         </div>
       </section>
+      <div class="hashlink"><div class="link" id="cat-8"></div></div>
       <h2>
         Toilet
-        <a class="toplink" href="#top">top</a>
+        <div class="links">
+          <a class="prevlink" href="#cat-7">prev</a>
+          ·
+          <a class="toplink" href="#top">top</a>
+          ·
+          <a class="nextlink" href="#cat-9">next</a>
+        </div>
       </h2>
       <section class="board">
         <div class="sound" id="audio/Toilet/1084.wav">
