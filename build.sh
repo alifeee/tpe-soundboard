@@ -14,8 +14,6 @@ else
     TITLES=( Coach Doors General Misc Reasons Safety Stations Times Toilet )
 fi
 
-TITLE="TransPennine Express soundboard"
-
 # mustache template parser
 source ./mo
 
@@ -67,7 +65,10 @@ rm -f $TEMP_FILE
 echo "${original_html}" | awk 'NR <= '"${start}"'' >> $TEMP_FILE
 for title in "${TITLES[@]}"; do
     cat << EOHTML >> $TEMP_FILE
-      <h2>$title</h2>
+      <h2>
+        $title
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#$title}}
         <div class="sound" id="{{ . }}">

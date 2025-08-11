@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ TITLE }}</title>
+    <title>Soundboard | TransPennine Express</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
     <style>
@@ -35,6 +36,28 @@
         height: 4rem;
       }
 
+      main {
+        position: relative;
+      }
+      main > * {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+      }
+      main h2 {
+        position: sticky;
+        top: 0;
+        background-color: #1e234f;
+        color: white;
+        margin: 1rem 0;
+        padding: 1rem;
+        display: flex;
+      }
+      main h2 a {
+        color: #82d0f588;
+        text-decoration: underline;
+        margin-left: auto;
+      }
+
       button {
         background: #00a6e6;
       }
@@ -48,17 +71,12 @@
         gap: 1rem;
       }
       .sound {
-        position: relative;
+        display: flex;
       }
       .sound button.play {
-        width: 100%;
-        padding-right: 3.5rem;
-        padding-left: 0.5rem;
+        width: 12.5rem;
       }
       .sound button.favourite {
-        position: absolute;
-        right: 0;
-        top: 0;
         background-color: grey;
         width: 3rem;
         max-width: 3rem;
@@ -73,6 +91,7 @@
 
       footer {
         text-align: center;
+        padding-bottom: 4rem;
       }
     </style>
 
@@ -121,9 +140,13 @@
         while (favourites_el.firstChild) {
           favourites_el.removeChild(favourites_el.lastChild);
         }
+        if (favourites.length == 0) {
+          favourites_el.innerText = "no favourites!";
+        }
         favourites.forEach((favourite_str) => {
           // original sound
           let sound_el = document.getElementById(favourite_str);
+          if (!sound_el) return;
           // set favourite button to red
           sound_el.querySelector(".favourite").classList.add("favourited");
 
@@ -154,6 +177,7 @@
         } else {
           // add sound to favourites array!
           favourites.push(sound);
+          favourites = favourites.toSorted();
         }
         load_favourites();
         // save to browser storage
@@ -171,12 +195,13 @@
           console.groupEnd();
         });
         favourites = JSON.parse(localStorage.getItem("favourites"));
+        if (!favourites) favourites = [];
         load_favourites();
       });
     </script>
   </head>
 
-  <body>
+  <body id="top">
     <img id="background" src="./tpe-train.jpg" />
     <header>
       <h1>
@@ -193,7 +218,10 @@
       </p>
       <section class="board" id="favourites"></section>
       <!-- !!start templating!! -->
-      <h2>Coach</h2>
+      <h2>
+        Coach
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Coach}}
         <div class="sound" id="{{ . }}">
@@ -206,7 +234,10 @@
         </div>
         {{/Coach}}
       </section>
-      <h2>Doors</h2>
+      <h2>
+        Doors
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Doors}}
         <div class="sound" id="{{ . }}">
@@ -219,7 +250,10 @@
         </div>
         {{/Doors}}
       </section>
-      <h2>General</h2>
+      <h2>
+        General
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#General}}
         <div class="sound" id="{{ . }}">
@@ -232,7 +266,10 @@
         </div>
         {{/General}}
       </section>
-      <h2>Misc</h2>
+      <h2>
+        Misc
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Misc}}
         <div class="sound" id="{{ . }}">
@@ -245,7 +282,10 @@
         </div>
         {{/Misc}}
       </section>
-      <h2>Reasons</h2>
+      <h2>
+        Reasons
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Reasons}}
         <div class="sound" id="{{ . }}">
@@ -258,7 +298,10 @@
         </div>
         {{/Reasons}}
       </section>
-      <h2>Safety</h2>
+      <h2>
+        Safety
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Safety}}
         <div class="sound" id="{{ . }}">
@@ -271,7 +314,10 @@
         </div>
         {{/Safety}}
       </section>
-      <h2>Stations</h2>
+      <h2>
+        Stations
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Stations}}
         <div class="sound" id="{{ . }}">
@@ -284,7 +330,10 @@
         </div>
         {{/Stations}}
       </section>
-      <h2>Times</h2>
+      <h2>
+        Times
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Times}}
         <div class="sound" id="{{ . }}">
@@ -297,7 +346,10 @@
         </div>
         {{/Times}}
       </section>
-      <h2>Toilet</h2>
+      <h2>
+        Toilet
+        <a class="toplink" href="#top">top</a>
+      </h2>
       <section class="board">
         {{#Toilet}}
         <div class="sound" id="{{ . }}">
