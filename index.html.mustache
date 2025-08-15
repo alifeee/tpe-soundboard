@@ -84,6 +84,12 @@
         margin-left: 0.5rem;
         margin-right: 0.5rem;
       }
+      main a {
+        color: #82d0f5;
+      }
+      main a:visited {
+        color: #baf;
+      }
       main h2 {
         position: sticky;
         top: 8rem;
@@ -125,9 +131,18 @@
       }
       .sound button.play {
         width: 12.5rem;
-        overflow-wrap: anywhere;
-        word-break: break-all;
       }
+      .sound button.play .name {
+        display: inline-block;
+        overflow: hidden;
+        /* show ellipse after 3 lines */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
+      }
+
       .sound button.favourite {
         background-color: grey;
         width: 3rem;
@@ -212,7 +227,7 @@
           let is_playing = play_button.classList.contains("active");
           if (is_playing) activefave = play_button;
           // change name (for more context)
-          play_button.innerText = id.replace("audio/", "").replace(/.wav$/, "");
+          // play_button.innerText = id.replace("audio/", "").replace(/.wav$/, "");
 
           // add to favourites
           favourites_el.appendChild(fave_el);
@@ -295,9 +310,11 @@
         <a href="https://alifeee.net/">alifeee</a> – for a wedding.
       </p>
       <p>
-        The sounds aren't well labelled. Thank TransPennine Express for this. I
-        can't be bothered to transcribe 1,074 sounds. If you can, feel free to
-        check out the
+        The sounds weren't well labelled by TransPennine Express.
+        <a href="https://wlcx.cc/">Sam</a> ran them through automatic
+        transcription software (whisper-cpp). Some of the transcriptions are not
+        great ;]. If you can be bothered to fix any – or want to download all
+        the 1,074 sounds – feel free to check out the
         <a href="https://github.com/alifeee/tpe-soundboard">website source</a>.
       </p>
       <p>
@@ -328,7 +345,7 @@
         {{#Coach}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -351,7 +368,7 @@
         {{#Doors}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -374,7 +391,7 @@
         {{#General}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -397,7 +414,7 @@
         {{#Misc}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -420,7 +437,7 @@
         {{#Reasons}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -443,7 +460,7 @@
         {{#Safety}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -466,7 +483,7 @@
         {{#Stations}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -489,7 +506,7 @@
         {{#Times}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
@@ -512,7 +529,7 @@
         {{#Toilet}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;

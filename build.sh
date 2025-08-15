@@ -41,10 +41,21 @@ export Stations
 export Times
 export Toilet
 
-# turn e.g., "audio/Coach/1054.wav" into "1054"
+# transcriptions
+export transcriptions=$(cat transcriptions.json)
+# turn e.g., "audio/Coach/1054.wav" into "Coach A"
+#   using transcriptions file generated with whisper-cpp
 soundname () {
+  # get transcription using
+  transcription=$(
+    echo "${transcriptions}" | jq -r '."'"${MO_FUNCTION_ARGS[0]}"'"'
+  )
+  if [[ "${transcription}" == "null" ]]; then
     bn="${MO_FUNCTION_ARGS[0]##*/}"
     echo "${bn%.*}"
+  else
+    echo "${transcription}"
+  fi
 }
 
 # rebuild TEMPLATE first
@@ -86,7 +97,7 @@ for title in "${TITLES[@]}"; do
         {{#$title}}
         <div class="sound" id="{{ . }}">
           <button class="play" onclick='play("{{ . }}")'>
-            {{ soundname . }}
+            <span class="name">{{ soundname . }}</span>
           </button>
           <button class="favourite" onclick='favourite("{{ . }}")'>
             &hearts;
